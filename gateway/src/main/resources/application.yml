@@ -1,0 +1,6 @@
+zuul.routes:
+  ui.path: /webapp/**
+  oauth:
+    path: /oauth/**
+    sensitiveHeaders: ""
+  users.path: /users/**

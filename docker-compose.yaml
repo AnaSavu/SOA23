@@ -1,5 +1,40 @@
 services:
+  # users-db:
+  #   image: "mvertes/alpine-mongo:4.0.5-0"
+
+  # emails-mq:
+  #   image: "rabbitmq:3.7-alpine"
+
   webapp:
     build: ./webapp
-    ports: 
-     - "9000:80"
+
+  #  users:
+  #   build: ./users
+  #   environment:
+  #     AMQP_URL: amqp://emails-mq:5672
+  #     MONGODB_URL: mongodb://users-db:27017/questions
+  #     REGISTRATION_BASE_URL: ${UI_BASE_URL}#/activate/
+  #     JWT_KEY: ${JWT_KEY}
+  #     OAUTH_CLIENT: ${OAUTH_CLIENT}
+  #     OAUTH_SECRET: ${OAUTH_SECRET}
+  #     WAIT_HOSTS: emails-mq:5672, users-db:27017
+  #     WAIT_HOSTS_TIMEOUT: 120
+  #   links:
+  #    - emails-mq
+  #    - users-db
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "443:8080"
+    environment:
+      # ZUUL_ROUTES_UI_URL: http://webapp
+      # ZUUL_ROUTES_OAUTH_URL: http://users:3000/oauth
+      # ZUUL_ROUTES_USERS_URL: http://users:3000/users
+      OAUTH_CLIENT: ${OAUTH_CLIENT}
+      OAUTH_SECRET: ${OAUTH_SECRET}
+      OAUTH_KEY: ${JWT_KEY}
+      WAIT_HOSTS: webapp:80
+      WAIT_HOSTS_TIMEOUT: 120
+    # links:
+    #  - users

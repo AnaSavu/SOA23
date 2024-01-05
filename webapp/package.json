@@ -1,9 +1,10 @@
 {
   "name": "webapp",
   "version": "0.0.0",
+  "proxy": "https://192.168.99.100",
   "scripts": {
     "ng": "ng",
-    "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && ng serve",
+    "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && ng serve --proxy-config proxy.conf.json",
     "build": "export SET NODE_OPTIONS=--openssl-legacy-provider && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
